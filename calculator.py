@@ -1,3 +1,4 @@
+import math
 from typing import Literal
 
 Operator = Literal["+", "-","*", "/"]
@@ -28,6 +29,20 @@ def calculate(a:float, op:Operator, b:float) -> float:
             raise ValueError(f"unknown operator {op!r}")
 
 
+def parse_number(text: str) -> float:
+    trimmed = text.strip()
+    if trimmed == "":
+        raise ValueError("please enter a number")
+
+    try:
+        value = float(trimmed)
+    except ValueError:
+        raise ValueError(f"{trimmed!r} is not a valid number") from None
+
+    if not math.isfinite(value):
+        raise ValueError(f"{trimmed!r} is not a valid number")
+
 
 answer = input("Enter the first number: ")
-print(f"You typed: {answer!r} ({type(answer).__name__})")
+first = parse_number(answer)
+print(f"{first} ({type(first).__name__})")
