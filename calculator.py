@@ -43,6 +43,13 @@ def parse_number(text: str) -> float:
         raise ValueError(f"{trimmed!r} is not a valid number")
 
 
-answer = input("Enter the first number: ")
-first = parse_number(answer)
+def ask_number(prompt: str) -> float:
+    while True:
+        answer = input(prompt)
+        try:
+            return parse_number(answer)
+        except ValueError as error:
+            print(f"{error}. Try again.")
+
+first = ask_number("Enter the first number: ")
 print(f"{first} ({type(first).__name__})")
