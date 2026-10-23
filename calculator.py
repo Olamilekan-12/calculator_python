@@ -64,4 +64,11 @@ def ask_operator(prompt: str) -> Operator:
 
 first = ask_number("Enter the first number: ")
 op = ask_operator("Enter an operator(+, -, *, /): ")
-print(f"{first} {op}")
+second = ask_number("Enter the second number: ")
+
+try:
+    result = calculate(first, op, second)
+except ZeroDivisionError as error:
+    print(f"Error: {error}")
+else:
+    print(f"{first} {op} {second} = {result}")
