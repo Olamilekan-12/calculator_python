@@ -1,7 +1,10 @@
 import math
-from typing import Literal
+from typing import Literal, TypeIs, get_args
 
 Operator = Literal["+", "-","*", "/"]
+
+def is_operator(text: str) -> TypeIs[Operator]:
+    return text in get_args(Operator)
 
 def add(a: float, b:float) -> float:
     return a + b
@@ -51,5 +54,14 @@ def ask_number(prompt: str) -> float:
         except ValueError as error:
             print(f"{error}. Try again.")
 
+
+def ask_operator(prompt: str) -> Operator:
+    while True:
+        answer = input(prompt)
+        if is_operator(answer):
+            return answer
+        print(f"{answer!r} is not an operator. User + - * or /. Try again.")
+
 first = ask_number("Enter the first number: ")
-print(f"{first} ({type(first).__name__})")
+op = ask_operator("Enter an operator(+, -, *, /): ")
+print(f"{first} {op}")
