@@ -36,7 +36,6 @@ def parse_number(text: str) -> float:
     trimmed = text.strip()
     if trimmed == "":
         raise ValueError("please enter a number")
-
     try:
         value = float(trimmed)
     except ValueError:
@@ -44,6 +43,8 @@ def parse_number(text: str) -> float:
 
     if not math.isfinite(value):
         raise ValueError(f"{trimmed!r} is not a valid number")
+    return value
+
 
 
 def ask_number(prompt: str) -> float:
@@ -57,18 +58,40 @@ def ask_number(prompt: str) -> float:
 
 def ask_operator(prompt: str) -> Operator:
     while True:
-        answer = input(prompt)
+        answer = input(prompt).strip()
         if is_operator(answer):
             return answer
-        print(f"{answer!r} is not an operator. User + - * or /. Try again.")
+        print(f"{answer!r} is not an operator. Use + - * or /. Try again.")
 
-first = ask_number("Enter the first number: ")
-op = ask_operator("Enter an operator(+, -, *, /): ")
-second = ask_number("Enter the second number: ")
 
-try:
-    result = calculate(first, op, second)
-except ZeroDivisionError as error:
-    print(f"Error: {error}")
-else:
-    print(f"{first} {op} {second} = {result}")
+def run_calculator() -> None:
+    first = ask_number("Enter the first number: ")
+    op = ask_operator("Enter an operator (+, -, *, /): ")
+    second = ask_number("Enter the second number: ")
+
+    try:
+        result = calculate(first, op, second)
+    except ZeroDivisionError as error:
+        print(f"Error: {error}")
+    else:
+        print(f"{first} {op} {second} = {result}")
+
+
+def ask_again() -> bool:
+    answer = input("calculate again? (y/n): ").strip().lower()
+    return answer == "y"
+
+
+def main() -> None:
+    try:
+        while True:
+            run_calculator()
+            if not ask_again():
+                break
+    except (KeyboardInterrupt, EOFError):
+        print("\nGoodbye!")
+
+
+if __name__ == "__main__":
+    main()
+        
