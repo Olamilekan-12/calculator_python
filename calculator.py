@@ -28,7 +28,6 @@ def calculate(a:float, op:Operator, b:float) -> float:
             raise ValueError(f"unknown operator {op!r}")
 
 
-print(calculate(10, "+", 4))
-print(calculate(10, "-", 4))
-print(calculate(10, "*", 4))
-print(calculate(10, "/", 4))
+
+answer = input("Enter the first number: ")
+print(f"You typed: {answer!r} ({type(answer).__name__})")
